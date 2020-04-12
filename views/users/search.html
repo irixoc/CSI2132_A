@@ -1,0 +1,46 @@
+{{define "yield"}}
+<style>
+  .guest-nav {
+    color: #fff;
+    background: #264D80;
+    margin: 80px 20px 10px 20px;
+    border-radius: 5px;
+  }
+
+  .bg-primary {
+    background: #264D80 !important;
+  }
+  .border-primary {
+    border-color: #264D80 !important;
+  }
+
+  .guest-cards {
+    border: 1px solid #e0e0e0 !important;
+    color: #264D80 !important;
+  }
+  .guest-cards:hover {
+    border: 1px solid #264D80 !important;
+  }
+</style>
+
+<div class="navbar text-center guest-nav pb-1">
+  <h2>Guest Dashboard</h2>
+</div>
+
+<div class="row m-1">
+  <div class="col">
+    <a href="/home" class="card-link">
+    <div class="card text-white mb-3 guest-cards">
+      <div class="card-body text-primary text-center">
+        Search For Listing
+      </div>
+      
+    </div>
+  </a>
+  </div>
+
+
+</div>
+{{end}}
+
+

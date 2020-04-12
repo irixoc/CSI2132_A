@@ -1,0 +1,16 @@
+{{define "yield"}}
+<h2 class="mb-3" >Find User</h2>
+    <form method="POST" action="/find">
+        <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" 
+                class="form-control" 
+                name="email"
+                id="email" 
+                aria-describedby="emailHelp" 
+                placeholder="Enter email">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Find</button>
+    </form>
+{{end}}

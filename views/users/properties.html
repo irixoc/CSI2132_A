@@ -1,0 +1,165 @@
+{{define "yield"}}
+<style>
+
+  ::-webkit-input-placeholder { /* Edge */
+      color: #d3d3d3 !important;
+    }
+
+    :-ms-input-placeholder { /* Internet Explorer */
+      color: #d3d3d3 !important;
+    }
+    ::placeholder {
+      color: #d3d3d3 !important;
+    }
+    body {
+        color: #000000;
+    }
+</style>
+<div class="row m-4 form-margins">
+
+  <div class="col">
+    <div class="card border-dark mb-3">
+      <div class="card-header">Property Information Form</div>
+      <div class="card-body text-primary">
+        {{template "signupForm" .}}
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event){
+    document.getElementById("postalcode").value = "M4C4H2"
+  });
+</script>
+{{end}}
+
+
+{{define "signupForm"}}
+<form action="/property" method="POST" style="color:#000000 !important;"> 
+    <div class="row">
+        <div class="col">
+            <label class="form-check" for="rpday">Rate Per Day</label>  
+            <input type="number" name="rpday" id="rpday" class="form-control" >
+        </div>
+        <div class="col">
+            <label class="form-check" for="rpweek">Rate Per Week</label>  
+            <input type="number" name="rpweek" id="rpweek" class="form-control">
+        </div>
+    </div>
+
+    <fieldset class="form-group">
+        <div class="row">
+          <legend class="col-form-label col-sm-2 pt-0 mr-1" >Property Type</legend>
+          <div class="col-sm-10">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="propertytype" id="propertytype1" value="apartment" checked>
+              <label class="form-check-label" for="propertytype1">Apartment</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="propertytype" id="propertytype2" value="bed and breakfast">
+              <label class="form-check-label" for="propertytype2">bed and breakfast</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="propertytype" id="propertytype3" value="unique home" >
+              <label class="form-check-label" for="propertytype3">unique home</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="propertytype" id="propertytype4" value="vacation home">
+                <label class="form-check-label" for="propertytype4">vacation home</label>              
+            </div>
+          </div>
+        </div>
+    </fieldset>
+    <hr>
+    <div class="row">
+        <div class="col">
+            <label class="form-check" for="amenities">Amenities</label> 
+            <input type="text" name="amenities" id="amenities" class="form-control" >
+        </div>
+        <div class="col">
+            <label class="form-check" for="bedrooms">Bedrooms</label>  
+            <input type="number" name="bedrooms" id="bedrooms" class="form-control" >
+        </div>
+        <div class="col">
+            <label class="form-check" for="bathrooms">Bathrooms</label>  
+            <input type="number" name="bathrooms" id="bathrooms" class="form-control">
+        </div>
+        <div class="col">
+            <label class="form-check" for="accommodates">Accommodates</label> 
+            <input type="number" name="accommodates" id="accommodates" class="form-control">
+        </div>
+    </div>
+    
+    <hr>
+
+
+    <div class="form-row">
+        <div class="col-2 form-group" style="width: 20px !important;">
+          <label for="addressn" class="text-dark">#</label>
+          <input type="number" 
+                 name="addressn"
+                 id="addressn" 
+                 class="form-control" 
+                 placeholder="123 ">
+        </div>
+        <div class="col form-group">
+          <label for="address" class="text-dark">Address</label>
+          <input type="text" 
+                 name="address"
+                 id="address" 
+                 class="form-control" 
+                 placeholder="Fake st.">
+        </div>
+      </div>
+    
+    
+    <div class="form-row">
+      <div class="col form-group">
+        <label for="city" class="text-dark">City</label>
+        <input type="text" 
+               name="city"
+               id="city" 
+               class="form-control" 
+               placeholder="Toronto ">
+      </div>
+      <div class="col form-group">
+        <label for="province" class="text-dark">Province</label>
+        <input type="text" 
+               name="province"
+               id="province" 
+               class="form-control" 
+               placeholder="Ontario">
+      </div>
+      <div class="col form-group">
+        <label for="country" class="text-dark">Country</label>
+        <input type="text" 
+               name="country"
+               id="country" 
+               class="form-control" 
+               placeholder="Canada">
+      </div>
+    </div> 
+    
+      <div class="form-row">
+        <div class="col form-group">
+          <label for="postalcode" class="text-dark">Postal Code</label>
+          <input type="text" 
+                 name="postalcode"
+                 id="postalcode" 
+                 class="form-control" 
+                 placeholder="X1X1X1"
+                 pattern="[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]$"
+                 onblur="this.value=removeSpaces(this.value);">
+                 <small id="postalcode" class="form-text text-muted">Format (no spaces): A2B3C4 </small>
+        </div>
+    </div>
+
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-dark">Add Property</button>
+    </div>
+    
+
+</form>
+{{end}}

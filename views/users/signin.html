@@ -1,0 +1,45 @@
+{{define "yield"}}
+<style>
+  body {
+    background: #5ac8fb;
+    background: -webkit-linear-gradient(to left, #52edc7, #5ac8fb);
+    background: linear-gradient(to left, #52edc7, #5ac8fb);
+  }
+</style>
+<div class="row mt-4 form-margins">
+  <div class="col"></div>
+  <div class="col">
+    <div class="card border-dark mb-3">
+      <div class="card-header bg-dark" style="color:white;">Welcome Back</div>
+      <div class="card-body text-primary">
+        {{template "signinForm" .}}
+      </div>
+    </div>
+  </div>
+  <div class="col"></div>
+</div>
+
+{{end}}
+
+{{define "signinForm"}}
+<form action="/signin" method="POST">
+    <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" 
+            name="email"
+            id="email" 
+            class="form-control" 
+            aria-describedby="emailHelp" 
+            placeholder="Enter email">
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" 
+            name="password"
+            id="password" 
+            class="form-control" 
+            placeholder="Password">
+    </div>
+    <button type="submit" class="btn btn-dark">SIGN IN</button>
+</form>
+{{end}}

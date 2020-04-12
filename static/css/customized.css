@@ -1,0 +1,339 @@
+/*!
+ * We added and modified this CSS to be used in our project for CSI2132[B]
+ * We obtained this CSS file from Start Bootstrap. Their information is as follows: 
+ * One Page Wonder v5.0.7 (https://startbootstrap.com/template-overviews/one-page-wonder)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-one-page-wonder/blob/master/LICENSE)
+ */
+
+body {
+  font-family: 'Lato';
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Catamaran';
+  font-weight: 800 !important;
+}
+.card-img-top {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+}
+.btn-xl {
+  text-transform: uppercase;
+  padding: 1em 2em;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+}
+
+.bg-black {
+  background-color: #000 !important;
+}
+
+.rounded-pill {
+  border-radius: 5rem;
+}
+
+.navbar-custom {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.navbar-custom .navbar-brand {
+  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: 0.1rem;
+  font-weight: 700;
+}
+
+.navbar-custom .navbar-nav .nav-item .nav-link {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+}
+
+
+/* Form Styles Start Here*/
+
+.form-margins {
+  position: relative; top: 50px;
+}
+
+.container-form {
+  margin-top: 4em;
+  margin-bottom: 3em;
+}
+
+.btn-frm {
+  border-radius: 0.9rem !important;
+  font-size: 90%;
+  border-radius: 0px;
+  letter-spacing: .1rem;
+  border: 4px solid #5ac8fb !important;
+  font-weight: bolder;
+  padding: 0.8rem;
+  transition: all 0.2s;
+  color: #5ac8fb !important;
+  background-color: #ffffff !important;
+}
+
+.btn-frm:hover {
+  font-weight: bold;
+
+  color: #FFFFFF !important;
+  background-color: #5ac8fb !important;
+}
+
+/* Form Styles End Here*/
+
+
+header.masthead {
+  position: relative;
+  overflow: hidden;
+  padding-top: calc(7rem + 72px);
+  padding-bottom: 7rem;
+  background: #5ac8fb;
+  background: -webkit-linear-gradient(to left, #52edc7, #5ac8fb);
+  background: linear-gradient(to left, #52edc7, #5ac8fb);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: scroll;
+  background-size: cover;
+}
+
+header.masthead .masthead-content {
+  z-index: 1;
+  position: relative;
+}
+
+header.masthead .masthead-content .masthead-heading {
+  font-size: 4rem;
+}
+
+header.masthead .masthead-content .masthead-subheading {
+  font-size: 2rem;
+}
+
+
+
+@media (min-width: 992px) {
+
+  header.masthead {
+    padding-top: calc(10rem + 55px);
+    padding-bottom: 10rem;
+  }
+  header.masthead .masthead-content .masthead-heading {
+    font-size: 6rem;
+  }
+  header.masthead .masthead-content .masthead-subheading {
+    font-size: 4rem;
+  }
+}
+
+.bg-primary {
+  background-color: #0062E6 !important;
+}
+
+.container-custom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Home Button For DASHBOARD pagesStart here */
+.btn-host:focus {
+  outline: none;
+}
+
+.btn-host {
+  border-radius: 0px;
+  text-transform: uppercase;
+  float: left;
+  min-width: 150px;
+  max-width: 250px;
+  display: block;
+  padding: 0.9em 1.8em;
+  background: none;
+  position: relative;
+  z-index: 1;
+  letter-spacing: 2px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  border: 4px solid;
+  cursor: pointer;
+}
+
+
+.btn-host::after {
+  content: "";
+  background-color: transparent;
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  opacity: 0;
+  color: #fff;
+  z-index: -1;
+}
+
+.btn-host:hover::after {
+  opacity: 1;
+  background-color: #000;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.btn-host, .btn-host:after {
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+
+.btn-host:hover {
+  border: 4px solid #fff;
+  color: #fff;
+}
+
+
+.btn-guest:focus {
+  outline: none;
+}
+
+.btn-guest {
+  border-radius: 0px;
+  text-transform: uppercase;
+  float: left;
+  min-width: 150px;
+  max-width: 250px;
+  display: block;
+  padding: 0.9em 1.8em;
+  background: none;
+  position: relative;
+  z-index: 1;
+  letter-spacing: 2px;
+  color: #000;
+  border: 4px solid #000;
+  font-weight: bold;
+  font-size: 16px;
+  border: 5px solid;
+  cursor: pointer;
+}
+
+
+.btn-guest::after {
+  content: "";
+  background-color: transparent;
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  opacity: 0;
+  color: #fff;
+  z-index: -1;
+}
+
+.btn-guest:hover::after {
+  opacity: 1;
+  background-color: #fff;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.btn-guest, .btn-guest:after {
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+
+.btn-guest:hover {
+  border: 5px solid #000;
+  color: #000;
+}
+/* Home Button Ends here */
+
+.btn-primary:focus {
+  outline: none;
+}
+
+.btn-primary {
+  border-radius: 0px;
+  text-transform: uppercase;
+  float: left;
+  min-width: 150px;
+  max-width: 250px;
+  display: block;
+  padding: 0.9em 1.8em;
+  background: none;
+  position: relative;
+  z-index: 1;
+  letter-spacing: 2px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  border: 4px solid;
+  cursor: pointer;
+}
+
+
+.btn-primary::after {
+  content: "";
+  background-color: transparent;
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  opacity: 0;
+  color: #3f51b5;
+  z-index: -1;
+}
+
+.btn-primary:hover::after {
+  opacity: 1;
+  background-color: #cc879e;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.btn-primary, .btn-primary:after {
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+
+.btn-primary:hover {
+  border: 4px solid #cc879e;
+}
+
+.btn-secondary {
+  background-color: #33AEFF ;
+  border-color: #33AEFF ;
+}
+
+.btn-secondary:active, .btn-secondary:focus, .btn-secondary:hover {
+  background-color: #009AFF !important;
+  border-color: #009AFF !important;
+}
+
+.btn-secondary:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 106, 0, 0.5);
+}
