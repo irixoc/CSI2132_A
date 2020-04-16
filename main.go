@@ -1,8 +1,8 @@
 package main
 
 import (
-	"CSI2132/controllers"
-	"CSI2132/models"
+	"CSI2132_A/controllers"
+	"CSI2132_A/models"
 	"fmt"
 	"log"
 	"net/http"
@@ -49,7 +49,6 @@ func main() {
 
 	images := http.FileServer(http.Dir("./static/images/"))
 	router.PathPrefix("/images/").Handler(http.StripPrefix("/images/", images))
-	us.GetProperty()
 	// Routes handled by landingController
 	router.Handle("/", landingController.WelcomeView).Methods("GET")
 
@@ -59,17 +58,29 @@ func main() {
 	router.Handle("/host", dashboardController.HostView).Methods("GET")
 
 	// routes handled by users controller
-	router.HandleFunc("/signup", usersController.New).Methods("GET")
+	router.HandleFunc("/signup", usersController.SignUp).Methods("GET")
 	router.HandleFunc("/signup", usersController.Create).Methods("POST")
 
 	router.Handle("/signin", usersController.SignInView).Methods("GET")
-	router.HandleFunc("/signout", usersController.SignOut).Methods("GET")
 	router.HandleFunc("/signin", usersController.SignIn).Methods("POST")
+	router.HandleFunc("/exit", usersController.SignOut).Methods("POST")
 
+	// routes for uploading a property with the property information form
 	router.Handle("/property", usersController.PropertyView).Methods("GET")
 	router.HandleFunc("/property", usersController.CreateProperty).Methods("POST")
 
-	router.Handle("/search", usersController.Search).Methods("GET")
+	// routes to handle cookie problems
+	router.Handle("/invalid", usersController.Invalid).Methods("GET")
+	router.Handle("/gohome", usersController.Gohome).Methods("GET")
+	router.Handle("/expired", usersController.Expired).Methods("GET")
+	router.Handle("/phone", usersController.Phone).Methods("GET")
+
+	// routes for guests to search and book a property
+	router.HandleFunc("/search", usersController.GetProperty).Methods("GET")
+	router.HandleFunc("/hostsearch", usersController.GetPropertyForHost).Methods("GET")
+	router.HandleFunc("/rental", usersController.CreateRental).Methods("POST")
+	router.HandleFunc("/generate", usersController.CreateAgreement).Methods("POST")
+	// router.HandleFunc("/update", usersController.UpdatePhone).Methods("GET")
 
 	fmt.Printf("Server has started...\n")
 

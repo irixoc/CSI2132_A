@@ -101,7 +101,8 @@
                  name="addressn"
                  id="addressn" 
                  class="form-control" 
-                 placeholder="123 ">
+                 placeholder="123 "
+                 required>
         </div>
         <div class="col form-group">
           <label for="address" class="text-dark">Address</label>
@@ -109,7 +110,8 @@
                  name="address"
                  id="address" 
                  class="form-control" 
-                 placeholder="Fake st.">
+                 placeholder="Fake st."
+                 required>
         </div>
       </div>
     
@@ -121,7 +123,8 @@
                name="city"
                id="city" 
                class="form-control" 
-               placeholder="Toronto ">
+               placeholder="Toronto "
+               required>
       </div>
       <div class="col form-group">
         <label for="province" class="text-dark">Province</label>
@@ -129,7 +132,8 @@
                name="province"
                id="province" 
                class="form-control" 
-               placeholder="Ontario">
+               placeholder="Ontario"
+               required>
       </div>
       <div class="col form-group">
         <label for="country" class="text-dark">Country</label>
@@ -137,7 +141,8 @@
                name="country"
                id="country" 
                class="form-control" 
-               placeholder="Canada">
+               placeholder="Canada"
+               required>
       </div>
     </div> 
     
@@ -149,6 +154,7 @@
                  id="postalcode" 
                  class="form-control" 
                  placeholder="X1X1X1"
+                 required
                  pattern="[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]$"
                  onblur="this.value=removeSpaces(this.value);">
                  <small id="postalcode" class="form-text text-muted">Format (no spaces): A2B3C4 </small>

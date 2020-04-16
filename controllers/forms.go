@@ -6,14 +6,33 @@ import (
 	"github.com/gorilla/schema"
 )
 
+//RentalAgreement is used to insert a rental agreement
+type RentalAgreement struct {
+	PropertyID int    `schema:"propertyid"`
+	GuestID    int    `schema:"guestid"`
+	HostID     int    `schema:"hostid"`
+	StartDate  string `schema:"startdate"`
+	EndDate    string `schema:"enddate"`
+	PriceStay  string `schema:"priceofstay"`
+	ChosenRate string `schema:"chosenrate"`
+	Placeh     string `schema:"paymentmethod"`
+	Placehold  string `schema:"rates"`
+}
+
+// RentalForm uses cookies and form data to generate a rental agreement
+type RentalForm struct {
+	PropertyID int
+	GuestID    int
+}
+
 // PropertyForm is used to create new listing
 type PropertyForm struct {
 	PropertyType string  `schema:"propertytype"`
 	Amenities    string  `schema:"amenities"`
-	Bedrooms     string  `schema:"bedrooms"`
-	Bathrooms    string  `schema:"bathrooms"`
+	Bedrooms     int     `schema:"bedrooms"`
+	Bathrooms    int     `schema:"bathrooms"`
 	Accommodates int     `schema:"accommodates"`
-	AddressN     string  `schema:"addressn"`
+	AddressN     int     `schema:"addressn"`
 	Address      string  `schema:"address"`
 	City         string  `schema:"city"`
 	Province     string  `schema:"province"`

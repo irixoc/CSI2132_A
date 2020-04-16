@@ -1,0 +1,23 @@
+{{define "yield"}}
+
+<div class="card" style="margin: 30px auto; width:30%; margin-top: 80px;">
+    <div class="card-body">
+      <h5 class="card-title">Update Personal Info</h5>
+      <form action="/home" method="GET">
+        <div class="form-group">
+            <label for="tele">Enter New Phone Number</label>
+            <input type="tel" 
+                name="tele"
+                id="tele" 
+                class="form-control" >
+                <small>You will be brought back to the home page after you're done</small>
+        </div>
+        
+        <button type="submit" class="btn btn-dark">Update</button>
+    </form>
+
+    </div>
+  </div>
+
+
+{{end}}

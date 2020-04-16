@@ -1,0 +1,155 @@
+{{define "yield"}}
+<style>
+  .guest-nav {
+    color: #fff;
+    background: #264D80;
+    margin: 80px 20px 10px 20px;
+    border-radius: 5px;
+  }
+
+  .bg-primary {
+    background: #264D80 !important;
+  }
+  .border-primary {
+    border-color: #264D80 !important;
+  }
+
+  .guest-cards {
+    border: 1px solid #e0e0e0 !important;
+    color: #264D80 !important;
+  }
+  .guest-cards:hover {
+    border: 1px solid #264D80 !important;
+  }
+</style>
+
+<div class="navbar text-center guest-nav pb-1">
+  <h2>Guest Dashboard</h2>
+</div>
+
+<div class="list-group mx-4 mt-3" style="margin-bottom: 60px;">
+    <div class="card text-center">
+        <div class="card-header">
+            <div class="text-center mb-2">Rental Information</br>(Looks like the property is available)</div>
+
+        </div>
+        <div class="card-body">
+            <div>
+                <h5 class="font-weight-bolder">Guest Information<div style="font-size: 0.7em;">(You)</div></h5>
+                
+                <div><span class="font-weight-bolder">Full Name:</span> {{ .GuestFullName}}</div>
+            </div>
+            <hr>
+            <div>
+                <h5 class="font-weight-bolder">Host Information</h5>
+                <div><span class="font-weight-bolder">Full Name:</span> {{.HostFullName}}</div>
+            </div>
+            <hr>
+          <h5 class="card-title">Property Details</h5>
+          <p class="card-text">Property ID: {{.PropertyID}}</p>
+          <div style="border: 1px solid #5a5a5a; width:15%; margin: 2px auto;">
+            <p class="card-text">Rate Per Day: {{.DayRate}}</p>
+            <p class="card-text">Rate Per Week: {{.WeekRate}}</p>
+          </div>
+          <p class="card-text">Amenities: {{ .Amenities}}</p>
+          <p class="card-text">Bedrooms: {{ .Bedrooms}}</p>
+          <p class="card-text">Bathrooms: {{ .Bathrooms}}</p>
+          <p class="card-text">Accommodates: {{ .Accommodates}} guest(s)</p>
+          <div style="border: 1px solid #5a5a5a; width:20%; margin: 2px auto;">
+          <div><span class="font-weight-bolder">Property Address</span></div>
+          <p class="card-text m-0">{{.Number}} {{.Street}}</p>
+          <p class="card-text m-0">{{.City}}, {{.Province}}</p>
+          <p class="card-text m-0">{{.Postal}}  {{.Country}}</p>
+        </div>
+        </div>
+        <div class="card-footer text-muted">
+          <div>If you like what you see, fill out the rental agreement below and submit to book the property.</div>
+        </div>
+      </div>
+      <div class="card mt-3">
+        <div class="card-body">
+          <h5 class="card-title">Rental Agreement</h5>
+          <form action="/generate" method="POST">
+              <div class="form-row" style="width:44%;">
+                <div class="form-group col">
+                    <label for="startdate">Start Date</label>
+                    <input type="date" class="form-control" id="startdate" name="startdate" onchange="upstartdate()">
+                  </div>
+                  <div class="form-group col">
+                    <label for="enddate">End Date</label>
+                    <input type="date" class="form-control" id="enddate" name="enddate" onchange="upenddate()">
+                  </div>
+              </div>
+              <div class="form-group" style="width:20%;">
+                <label for="paymentmethod">Payment Method</label>
+                <input type="text" class="form-control" id="paymentmethod" name="paymentmethod">
+              </div>
+              <legend class="col-form-label col-sm-2 pt-0 mr-1" >Which rate would you like?</legend>
+              <div class="col-sm-10">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="rates" id="dailyrate" value="daily" onclick="dailyInput()" required>
+                  <label class="form-check-label" for="dailyrate">Daily Rate</label>
+                </div>
+                <div class="form-check form-check-inline mb-4">
+                  <input class="form-check-input" type="radio" name="rates" id="weeklyrate" value="weekly" onclick="weeklyInput()">
+                  <label class="form-check-label" for="weeklyrate">Weekly Rate</label>
+                </div>
+                <div class="form-group">
+                    <label for="chosenrate">Price Of Stay</label>
+                    <input type="text"  id="chosenrate" name="chosenrate" class="form-control" disabled style="background-color:white; color:black; width:7%;">
+                  </div>
+            </div>
+              <input type="number" name="propertyid"id="propertyid" value="{{.PropertyID}}" style="display:none;">
+              <input type="number" name="guestid"id="guestid" value="{{.GuestID}}" style="display:none;">
+              <input type="number" name="hostid"id="hostid" value="{{.HostID}}" style="display:none;">
+              <input type="text" name="priceofstay"id="priceofstay" style="display:none;">
+
+
+              <div id="dayHider" style="display:none;">{{.DayRate}}</div>
+              <div id="weekHider" style="display:none;">{{.WeekRate}}</div>
+              <button type="submit" class="btn btn-dark">Submit</button>
+          </form>
+        </div>
+      </div>
+</div>
+<script>
+    var date1
+    var date2
+    function upstartdate() {
+        var startdate = document.getElementById("startdate")
+        date1 = new Date(startdate.value); 
+        console.log(date1)
+    }
+    function upenddate() {
+        var enddate = document.getElementById("enddate")
+        date2 = new Date(enddate.value); 
+        console.log(date2)
+    }
+
+    function weeklyInput() {
+        var weekly = document.getElementById("weekHider")
+        var priceOfStay = document.getElementById("priceofstay")
+        var Difference_In_Time = date2.getTime() - date1.getTime(); 
+        var DiffDays = Difference_In_Time / (1000 * 3600 * 24); 
+        weeklyratecal = Math.abs(DiffDays)*(weekly.innerHTML/7)
+        document.getElementById("chosenrate").value = "$"+weeklyratecal ;
+        document.getElementById("priceofstay").value = "$"+weeklyratecal ;
+    } 
+    
+    function dailyInput() {
+        var daily = document.getElementById("dayHider")
+        var priceOfStay = document.getElementById("priceofstay")
+        var Difference_In_Time = date2.getTime() - date1.getTime(); 
+        var DiffDays = Difference_In_Time / (1000 * 3600 * 24);
+        dailyRateCalc = Math.abs(DiffDays)*daily.innerHTML 
+        document.getElementById("chosenrate").value = "$"+dailyRateCalc;
+        document.getElementById("priceofstay").value = "$"+dailyRateCalc;
+    }
+
+   
+       
+
+</script>
+{{end}}
+
+

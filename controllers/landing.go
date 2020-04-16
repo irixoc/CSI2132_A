@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"CSI2132/views"
+	"CSI2132_A/views"
 )
 
 // Landing type is used to create views for all the landing

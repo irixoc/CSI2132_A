@@ -1,0 +1,27 @@
+{{define "yield"}}
+<div class="navbar text-center host-nav pb-1">
+  <h2>Host Dashboard</h2>
+</div>
+
+<div class="list-group mx-4 mt-3" style="margin-bottom: 60px;">
+    <div class="text-center mb-2">All of <strong>Your</strong> Listings</div>
+  {{range .Property}}
+  <a class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1"><span class="font-weight-bold">Property Type:</span> {{ .PropertyType}}</h5>
+    </div>
+    <p class="mb-1"><span class="font-weight-bold">Amenities:</span> {{ .Amenities}}</p>
+    <p class="mb-1"><span class="font-weight-bold">Bedrooms:</span> {{ .Bedrooms}}</p>
+    <p class="mb-1"><span class="font-weight-bold">Bathrooms:</span> {{ .Bathrooms}}</p>
+    <p class="mb-1"><span class="font-weight-bold">Accommodates:</span> {{ .Accommodates}} guest(s)</p>
+    <form action="" method="POST" class="mt-2">   
+      <input style="display:none;" type="number"name="propertyid"id="propertyid" value="{{.PropertyID}}">
+       <button style="display:block;" class="navlink btn btn-dark" type="submit">View More</button>
+     </form>
+  </a>
+  {{end}}
+</div>
+
+{{end}}
+
+

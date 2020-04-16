@@ -5,12 +5,14 @@ import (
 	"database/sql"
 	"encoding/base64"
 	"fmt"
+	"strings"
 
 	_ "github.com/lib/pq" // This package loads the Postgres driver
 )
 
 // User type
 type User struct {
+	UserID     int
 	FirstName  string
 	LastName   string
 	MiddleName string
@@ -44,15 +46,8 @@ func NewUserService() (*UserService, error) {
 
 	password, err := base64.StdEncoding.DecodeString(dbcode)
 	if err != nil {
-		fmt.Println("Invalid Password.")
 		panic(err)
 	}
-
-	// var password string
-	// fmt.Println("Enter password: ")
-	// fmt.Scan(&password)
-	// password = strings.TrimSpace(password)
-	// fmt.Println("You entered: ", password)
 
 	// connectionInfo is a string with all the information needed to connect to a given database
 	connectionInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
@@ -82,25 +77,28 @@ func (us *UserService) Ping() error {
 
 /* ------------ Query methods and its helper functions start here ------------ */
 
-// ByID is a UserService method that is called to query a single row based on a user id
+// GetUserName is a UserService method that is called to query a single row based on a user id
 // If the user is found, it returns a pointer to a user, and a nil
 // If the user is not found, it returns an ErrNotFound error (part of the models package)
 // If non-models error occurs, that error is returned
-func (us *UserService) ByID(id uint) (*User, error) {
+func (us *UserService) GetUserName(id uint) (string, error) {
 	queryInfo := `
-	SELECT * FROM users
-	WHERE ID = $1`
+	SELECT first_name, last_name 
+	FROM users
+	WHERE user_id = $1`
 
-	user := User{}
+	var firstName, lastName string
 	row := us.db.QueryRow(queryInfo, id)
-	if err := row.Scan(user.Email, user.Password); err != nil {
+	if err := row.Scan(&firstName, &lastName); err != nil {
 		if err == sql.ErrNoRows {
-			return nil, ErrIDNotFound
+			return "", ErrIDNotFound
 		}
-		return nil, err
+		return "", err
 	}
 
-	return &user, nil
+	FullName := fmt.Sprintf("%s %s", strings.TrimSpace(firstName), strings.TrimSpace(lastName))
+
+	return FullName, nil
 }
 
 // ByEmail is a UserService method that is called to query the user from the db
@@ -110,12 +108,12 @@ func (us *UserService) ByID(id uint) (*User, error) {
 // If non-models error occurs, that error is returned
 func (us *UserService) ByEmail(email string) (*User, error) {
 	queryInfo := `
-	SELECT email, password FROM users
+	SELECT user_id, email, password FROM users
 	WHERE email = $1`
 
 	user := User{}
 	row := us.db.QueryRow(queryInfo, email)
-	if err := row.Scan(&user.Email, &user.Password); err != nil {
+	if err := row.Scan(&user.UserID, &user.Email, &user.Password); err != nil {
 		if err == sql.ErrNoRows {
 			return nil, ErrEmailNotFound
 		}
@@ -142,18 +140,17 @@ func (us *UserService) Create(user *User) error {
 		ROW($1, $2, $3, $4, $5, $6)::address, 
 		$7, $8, $9, $10, $11, $12, $13, $14
 	)
-	RETURNING email, password;`
+	RETURNING user_id;`
 
 	row := us.db.QueryRow(queryInfo,
 		user.AddressN, user.Address, user.City, user.Province, user.PostalCode, user.Country,
 		user.FirstName, user.LastName, user.Email, user.Password, user.Phone, user.Host, user.Guest, user.MiddleName)
 
-	newUser := User{}
-	if err := row.Scan(&newUser.Email, &newUser.Password); err != nil {
+	if err := row.Scan(&user.UserID); err != nil {
 		return err
 	}
 
-	fmt.Printf("New user with email: %s was created\n", newUser.Email)
+	fmt.Printf("New user with ID: %d was created\n", user.UserID)
 	return nil
 }
 
@@ -180,9 +177,11 @@ func (us *UserService) VerifyEmail(email string) error {
 		}
 		return err
 	}
+
 	if user != nil {
 		return ErrDuplicateEmail
 	}
+
 	return nil
 }
 

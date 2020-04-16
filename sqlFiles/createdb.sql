@@ -23,7 +23,7 @@ CREATE TABLE employees (
 
 CREATE TABLE branch (
     branch_id SERIAL,
-    manager_id INTEGER NOT NULL,
+    manager_id INTEGER,
     country character varying(20) COLLATE pg_catalog."default",
     CONSTRAINT branch_pkey PRIMARY KEY (branch_id),
     CONSTRAINT branch_manager_id_fkey FOREIGN KEY (manager_id)

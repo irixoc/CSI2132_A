@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"CSI2132/views"
+	"CSI2132_A/views"
 )
 
 // Dashboard type is used to create all the dashboard views

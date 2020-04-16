@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"CSI2132/models"
-	"CSI2132/views"
+	"CSI2132_A/models"
+	"CSI2132_A/views"
 	"fmt"
 	"net/http"
 )
@@ -13,8 +13,14 @@ type Users struct {
 	SignInView   *views.View
 	SignOutView  *views.View
 	Search       *views.View
+	HostSearch   *views.View
+	MakeRental   *views.View
 	us           *models.UserService
 	PropertyView *views.View
+	Invalid      *views.View
+	Gohome       *views.View
+	Expired      *views.View
+	Phone        *views.View
 }
 
 // NewUsers is a factory method for Users struct
@@ -23,16 +29,27 @@ func NewUsers(us *models.UserService) *Users {
 		NewView:      views.NewView("landing", "views/users/signup.html"),
 		SignInView:   views.NewView("landing", "views/users/signin.html"),
 		SignOutView:  views.NewView("landing", "views/users/signout.html"),
-		PropertyView: views.NewView("landing", "views/users/properties.html"),
-		Search:       views.NewView("landing", "views/users/search.html"),
+		PropertyView: views.NewView("dashboard", "views/users/properties.html"),
+		Search:       views.NewView("dashboard", "views/users/search.html"),
+		HostSearch:   views.NewView("dashboard", "views/users/searchhost.html"),
+		MakeRental:   views.NewView("dashboard", "views/users/rentalagreement.html"),
+		Invalid:      views.NewView("invalid", "views/users/invalid.html"),
+		Gohome:       views.NewView("gohome", "views/users/gohome.html"),
+		Expired:      views.NewView("expired", "views/users/expired.html"),
 		us:           us,
+		Phone:        views.NewView("dashboard", "views/users/update.html"),
 	}
 }
 
-// New is called to render a view for user creation form
-func (u *Users) New(w http.ResponseWriter, r *http.Request) {
+// SignUp is called to render a view for user creation form
+func (u *Users) SignUp(w http.ResponseWriter, r *http.Request) {
 	u.NewView.Render(w, nil)
 }
+
+//UpdatePhone updates phone number
+// func (u *Users) UpdatePhone(w http.ResponseWriter, r *http.Request) {
+// 	fmt.Println(w, "Your phone number has been updated")
+// }
 
 // Create makes a POST request to process the signup form when a
 // user tries to create a new user account
@@ -46,9 +63,10 @@ func (u *Users) Create(w http.ResponseWriter, r *http.Request) {
 
 	if err := u.us.VerifyEmail(form.Email); err != nil {
 		if err == models.ErrDuplicateEmail {
-			fmt.Fprintf(w, "The user with the email: %s already exists.\n", form.Email)
+			fmt.Fprintf(w, "A user with the email: %s already exists. Please go back and try again.\n", form.Email)
 		} else {
-			panic(err)
+			fmt.Println(err)
+			fmt.Fprintf(w, "You have entered an invalid email or password: %s. Please go back and try again.\n", form.Email)
 		}
 		return
 	}
@@ -69,17 +87,14 @@ func (u *Users) Create(w http.ResponseWriter, r *http.Request) {
 		Host:       checkBox(form.Host),
 		Guest:      checkBox(form.Guest),
 	}
-	fmt.Println("FORM VALUES: Host Value -->", form.Host)
-	fmt.Println("FORM VALUES: Guest Value -->", form.Guest)
-	fmt.Println("Host Value", user.Host)
-	fmt.Println("Guest Value", user.Guest)
+
 	if err := u.us.Create(user); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		panic(err)
+		fmt.Println(err)
+		http.Redirect(w, r, "/invalid", 301)
 
 	}
 
-	NewCookie(w, r, user.Email)
+	NewCookie(w, r, user.UserID)
 	http.Redirect(w, r, "/home", 301)
 }
 
@@ -90,7 +105,8 @@ func (u *Users) SignIn(w http.ResponseWriter, r *http.Request) {
 	form := SignInForm{}
 
 	if err := parseForm(r, &form); err != nil {
-		panic(err)
+		fmt.Printf("Error occured at parseForm at SignIn(controllers):\n%s\n", err)
+		http.Redirect(w, r, "/gohome", 301)
 	}
 
 	user := &models.User{}
@@ -98,15 +114,17 @@ func (u *Users) SignIn(w http.ResponseWriter, r *http.Request) {
 	user, err := u.us.Authenticate(form.Email, form.Password)
 
 	switch err {
-	case models.ErrNotFound:
-		fmt.Fprintln(w, "Invalid email address.")
+	case models.ErrEmailNotFound:
+		http.Redirect(w, r, "/invalid", 301)
+		return
 	case models.ErrInvalidPassword:
-		fmt.Fprintln(w, "Invalid password.")
+		http.Redirect(w, r, "/invalid", 301)
+		return
 	case nil:
-		NewCookie(w, r, user.Email)
+		NewCookie(w, r, user.UserID)
 		http.Redirect(w, r, "/home", 301)
 	default:
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Redirect(w, r, "/gohome", 301)
 		return
 	}
 
