@@ -135,10 +135,10 @@ func (us *UserService) ByEmail(email string) (*User, error) {
 func (us *UserService) Create(user *User) error {
 
 	queryInfo := `
-	INSERT INTO users (user_address, first_name, last_name, email, password, phone_number, host, guest, middle_name)
+	INSERT INTO users (user_address, first_name, last_name, email, password, phone_number, host, guest, middle_name, branch_id)
 	VALUES (
 		ROW($1, $2, $3, $4, $5, $6)::address, 
-		$7, $8, $9, $10, $11, $12, $13, $14
+		$7, $8, $9, $10, $11, $12, $13, $14, 1
 	)
 	RETURNING user_id;`
 

@@ -82,7 +82,6 @@ func (u *Users) GetProperty(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	// fmt.Println(&Search.Property)
 
 	u.Search.Render(w, Search)
 }
