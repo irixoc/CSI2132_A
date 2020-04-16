@@ -3,9 +3,9 @@ package models
 
 // Prod info for connectiong to school db
 const (
-	host   = "localhost"
-	port   = "5432"
+	host   = "web0.eecs.uottawa.ca"
+	port   = "15432"
 	dbname = "group_153"
-	user   = "postgres"
+	user   = "rxion058"
 	dbcode = "SGFsbGVsdWphaDEx"
 )
