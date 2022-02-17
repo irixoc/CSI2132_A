@@ -1,4 +1,5 @@
 # CSI2132
+**Description:** Final project assignment for my database design course at the University of Ottawa. I coded the UI and Phil designed the database.
 
 Setup:
 1. Navigate to CSI2132 directory
